@@ -3,7 +3,6 @@ package com.registro.Register.controller;
 import com.registro.Register.dto.UsuarioRequest;
 import com.registro.Register.dto.UsuarioResponse;
 import com.registro.Register.model.LoginUsuario;
-import com.registro.Register.model.Usuario;
 import com.registro.Register.repository.UsuarioRepository;
 import com.registro.Register.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -46,7 +44,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public Object deletarUsuario(@PathVariable Long id) {
+    public ResponseEntity<?> deletarUsuario(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
 

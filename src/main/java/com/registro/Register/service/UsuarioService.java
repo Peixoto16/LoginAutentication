@@ -7,6 +7,8 @@ import com.registro.Register.model.Usuario;
 import com.registro.Register.repository.UsuarioRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +20,11 @@ public class UsuarioService {
     @Autowired
     private UsuarioMapper mapper;
 
+    private PasswordEncoder encoder;
     private UsuarioRepository repository;
 
     public UsuarioService(UsuarioRepository repository) {
+        this.encoder = new BCryptPasswordEncoder();
         this.repository = repository;
     }
 
@@ -31,12 +35,17 @@ public class UsuarioService {
     }
 
     public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) {
+        String passEncoder = this.encoder.encode(usuarioRequest.getSenha());
+        usuarioRequest.setSenha(passEncoder);
+
         Usuario user = mapper.toEntity(usuarioRequest);
         repository.save(user);
         return mapper.toResponse(user);
     }
 
     public UsuarioResponse editarUsuario(UsuarioRequest usuarioRequest) {
+        String passEncoder = this.encoder.encode(usuarioRequest.getSenha());
+        usuarioRequest.setSenha(passEncoder);
 
         Usuario user = repository.findByEmail(usuarioRequest.getEmail());
 
