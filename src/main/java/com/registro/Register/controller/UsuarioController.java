@@ -40,14 +40,13 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public Usuario editarUsuario(@RequestBody Usuario usuario){
-        Usuario editarUsuario = repository.save(usuario);
-        return ResponseEntity.ok(editarUsuario).getBody();
+    public UsuarioResponse editarUsuario(@RequestBody UsuarioRequest usuarioRequest){
+        UsuarioResponse editarUser = service.editarUsuario(usuarioRequest);
+        return ResponseEntity.ok(editarUser).getBody();
     }
 
     @DeleteMapping("/{id}")
-    public Object deletarUsuario(@PathVariable Long id){
-        Optional<Usuario> excluirUsurio = repository.findById(id);
+    public Object deletarUsuario(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
 

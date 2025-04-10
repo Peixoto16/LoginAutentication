@@ -32,6 +32,9 @@ public class Usuario {
         this.telefone = telefone;
     }
 
+    public Usuario() {
+    }
+
     public Long getID() {
         return ID;
     }

@@ -11,19 +11,21 @@ public class UsuarioRequest
 
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 3, max = 50, message = "Nome deve ter entre 3 e 50 caracteres")
-    String nome;
+    private String nome;
 
     @NotBlank(message = "Email é obrigatório")
     @Email(message = "Email deve ser válido")
-    String email;
+    private String email;
 
     @NotBlank(message = "Senha é obrigatória")
     @Size(min = 6, max = 20, message = "Senha deve ter entre 6 e 20 caracteres")
-    String senha;
+    private String senha;
 
     @Pattern(regexp = "^\\(?(\\d{2})\\)?[ .-]?(\\d{4,5})[ .-]?(\\d{4})$",
             message = "Telefone deve estar no formato (XX) XXXX-XXXX ou (XX) XXXXX-XXXX")
-    String telefone;
+    private String telefone;
+
+    private boolean ativo;
 
     public String getNome() {
         return nome;
@@ -55,5 +57,13 @@ public class UsuarioRequest
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

@@ -5,6 +5,7 @@ import com.registro.Register.dto.UsuarioRequest;
 import com.registro.Register.dto.UsuarioResponse;
 import com.registro.Register.model.Usuario;
 import com.registro.Register.repository.UsuarioRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,21 @@ public class UsuarioService {
     public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) {
         Usuario user = mapper.toEntity(usuarioRequest);
         repository.save(user);
+        return mapper.toResponse(user);
+    }
+
+    public UsuarioResponse editarUsuario(UsuarioRequest usuarioRequest) {
+
+        Usuario user = repository.findByEmail(usuarioRequest.getEmail());
+
+            user.setNome(usuarioRequest.getNome());
+            user.setEmail(usuarioRequest.getEmail());
+            user.setSenha(usuarioRequest.getSenha());
+            user.setTelefone(usuarioRequest.getTelefone());
+            user.setAtivo(usuarioRequest.isAtivo());
+
+        repository.save(user);
+
         return mapper.toResponse(user);
     }
 }
