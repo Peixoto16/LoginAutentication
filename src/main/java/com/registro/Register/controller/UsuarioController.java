@@ -5,12 +5,18 @@ import com.registro.Register.dto.UsuarioResponse;
 import com.registro.Register.model.LoginUsuario;
 import com.registro.Register.repository.UsuarioRepository;
 import com.registro.Register.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -32,13 +38,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public UsuarioResponse criarUsuario(@RequestBody UsuarioRequest usuarioRequest){
+    public UsuarioResponse criarUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest){
         UsuarioResponse user = service.criarUsuario(usuarioRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(user).getBody();
     }
 
     @PutMapping
-    public UsuarioResponse editarUsuario(@RequestBody UsuarioRequest usuarioRequest){
+    public UsuarioResponse editarUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest){
         UsuarioResponse editarUser = service.editarUsuario(usuarioRequest);
         return ResponseEntity.ok(editarUser).getBody();
     }
@@ -58,6 +64,28 @@ public class UsuarioController {
                     .body("Email não cadastrado");
         }
 
+        Boolean validarSenha = service.validarSenha(loginRequest);
+
+        if(!validarSenha){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Senha Incorreta");
+        }
+
         return ResponseEntity.ok("Logado");
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField(); // Corrigido o cast
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        return ResponseEntity.badRequest().body(errors);
+    }
+
 }

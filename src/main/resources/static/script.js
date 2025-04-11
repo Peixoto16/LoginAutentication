@@ -57,22 +57,22 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                const response = await fetch("http://localhost:8080/usuarios/login", {
+                const response = await fetch(`http://localhost:8080/usuarios/login`, {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
                     },
                     body: JSON.stringify({
                         email: Iemail.value,
                         senha: Isenha.value
                     })
                 });
-
                 const data = await response.text();
 
                 if (response.ok) {
                     alert("Login realizado com sucesso!");
-                    // window.location.href = "dashboard.html";
+                    //window.location.href = "dashboard.html";
                 } else {
                     alert(data || "Erro ao fazer login.");
                 }

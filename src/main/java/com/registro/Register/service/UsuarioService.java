@@ -3,6 +3,7 @@ package com.registro.Register.service;
 import com.registro.Register.config.UsuarioMapper;
 import com.registro.Register.dto.UsuarioRequest;
 import com.registro.Register.dto.UsuarioResponse;
+import com.registro.Register.model.LoginUsuario;
 import com.registro.Register.model.Usuario;
 import com.registro.Register.repository.UsuarioRepository;
 import org.apache.catalina.User;
@@ -58,5 +59,12 @@ public class UsuarioService {
         repository.save(user);
 
         return mapper.toResponse(user);
+    }
+
+    public Boolean validarSenha(LoginUsuario loginRequest) {
+
+        Usuario senha = repository.findByEmail(loginRequest.getEmail());
+
+        return encoder.matches(loginRequest.getSenha(), senha.getSenha());
     }
 }
