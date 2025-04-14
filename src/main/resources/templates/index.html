@@ -1,24 +1,77 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login e Registro</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="/static/style.css">
-    <script src="/static/script.js" defer></script>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Api de Registro</title>
 </head>
 <body>
-    <div class="box">
-        <form id="formCadastro">
-            <h1>Registrar</h1>
-            <input type="text" class="nome" name="nome" placeholder="Nome" required>
-            <input type="text" class="email" name="email" placeholder="Email" required>
-            <input type="password" class="senha" name="senha" placeholder="Senha" required>
-            <input type="text" class="telefone" class="telefone" name="tel" placeholder="Telefone" required>
-            <button id="btnCadastro">Cadastrar</button>
+<div class="container">
+    <div class="form-box">
+        <!-- Header -->
+        <div class="header">
+            <h2 id="formTitle">Bem-vindo de volta!</h2>
+            <p id="formSubtitle">Faça login para acessar sua conta</p>
+        </div>
+
+        <!-- Form -->
+        <form id="authForm" onsubmit="handleSubmit(event)">
+            <div id="nameField" class="input-group" style="display: none;">
+                <i data-lucide="user" class="icon"></i>
+                <input
+                        type="text"
+                        name="name"
+                        placeholder="Nome Completo"
+                />
+            </div>
+
+            <div id="phoneField" class="input-group" style="display: none;">
+                <i data-lucide="phone" class="icon"></i>
+                <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Telefone"
+                        pattern="[0-9]{11}"
+                        title="Digite um número de telefone válido (11 dígitos)"
+                />
+            </div>
+
+            <div class="input-group">
+                <i data-lucide="mail" class="icon"></i>
+                <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        required
+                />
+            </div>
+
+            <div class="input-group">
+                <i data-lucide="lock" class="icon"></i>
+                <input
+                        type="password"
+                        name="password"
+                        placeholder="Senha"
+                        required
+                />
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i id="submitIcon" data-lucide="log-in" class="icon"></i>
+                <span id="submitText">Entrar</span>
+            </button>
         </form>
+
+        <!-- Footer -->
+        <div class="footer">
+            <button onclick="toggleForm()" class="toggle-btn">
+                <span id="toggleText">Não tem uma conta? Cadastre-se</span>
+            </button>
+        </div>
     </div>
+</div>
+<script src="/static/script.js"></script>
 </body>
 </html>

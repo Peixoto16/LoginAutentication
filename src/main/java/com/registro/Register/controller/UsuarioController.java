@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,9 +37,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public UsuarioResponse criarUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest){
-        UsuarioResponse user = service.criarUsuario(usuarioRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user).getBody();
+    public ResponseEntity<?> criarUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) {
+        if (repository.existsByEmail(usuarioRequest.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email já cadastrado");
+        }
+
+        UsuarioResponse novoUsuario = service.criarUsuario(usuarioRequest);
+        return ResponseEntity.ok(novoUsuario);
     }
 
     @PutMapping
@@ -75,7 +78,6 @@ public class UsuarioController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 

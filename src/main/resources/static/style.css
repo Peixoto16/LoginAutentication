@@ -1,34 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
-}
-h1 {
-    color: #181818;
-    margin: 20px 0 10px 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
-body {
-    background-color: #535b5b;
+.container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #9333ea, #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
 }
 
-.box, form {
-    gap: 20px;
+.form-box {
+    background: white;
+    width: 100%;
+    max-width: 28rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.header {
+    text-align: center;
+    padding: 1.5rem;
+    background: linear-gradient(to right, #9333ea, #3b82f6);
+    color: white;
+}
+
+.header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+form {
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 1rem;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group .icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.625rem 1rem 0.625rem 2.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #9333ea;
+}
+
+.submit-btn {
+    display: flex;
     align-items: center;
-    min-height: 90vh;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.625rem;
+    background: linear-gradient(to right, #9333ea, #3b82f6);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
 }
 
-input {
-    width: 300px;
-    height: 35px;
-    border-radius: 12px;
-    padding: 0 15px 0 15px;
+.submit-btn:hover {
+    opacity: 0.9;
 }
 
-button {
-    width: 150px;
-    height: 40px;
-    border-radius: 10px;
+.submit-btn .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.footer {
+    padding: 1.5rem;
+    background: #f9fafb;
+    text-align: center;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: #9333ea;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.toggle-btn:hover {
+    color: #7e22ce;
 }
