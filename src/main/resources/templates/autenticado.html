@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Autenticado</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #9333ea, #3b82f6);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #9333ea;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            word-break: break-word;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>🎉 Parabéns!</h1>
+    <p>Você foi autenticado com sucesso. Aqui está seu token JWT:</p>
+    <pre id="tokenBox">Carregando...</pre>
+    <button onclick="logout()">Sair</button>
+</div>
+
+<script>
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        // Se não tiver token, volta pro login
+        window.location.href = "/index.html";
+    } else {
+        document.getElementById("tokenBox").innerText = token;
+    }
+
+    function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "index.html";
+    }
+</script>
+</body>
+</html>

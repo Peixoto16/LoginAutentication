@@ -33,7 +33,7 @@ async function fazerLogin(email, senha) {
         localStorage.setItem('token', data); // aqui é 'data', não 'data.token', porque você usou response.text()
 
         // Redireciona para a dashboard
-        window.location.href = '/dashboard';
+        window.location.href = 'autenticado.html';
 
         return data;
     } catch (error) {
