@@ -1,5 +1,6 @@
 package com.registro.Register.controller;
 
+import com.registro.Register.configSecurity.JwtUtil;
 import com.registro.Register.dto.UsuarioRequest;
 import com.registro.Register.dto.UsuarioResponse;
 import com.registro.Register.model.LoginUsuario;
@@ -21,6 +22,9 @@ import java.util.Map;
 @CrossOrigin("*")
 @RequestMapping("/usuarios")
 public class UsuarioController {
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     private UsuarioService service;
 
@@ -69,12 +73,14 @@ public class UsuarioController {
 
         Boolean validarSenha = service.validarSenha(loginRequest);
 
-        if(!validarSenha){
+        if (!validarSenha) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Senha Incorreta");
         }
 
-        return ResponseEntity.ok("Logado");
+        String token = jwtUtil.generateToken(loginRequest.getEmail());
+        return ResponseEntity.ok(Map.of("token", token));
+
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
