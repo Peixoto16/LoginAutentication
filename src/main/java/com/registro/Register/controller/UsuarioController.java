@@ -3,18 +3,15 @@ package com.registro.Register.controller;
 import com.registro.Register.configSecurity.JwtUtil;
 import com.registro.Register.dto.UsuarioRequest;
 import com.registro.Register.dto.UsuarioResponse;
-import com.registro.Register.model.LoginUsuario;
+import com.registro.Register.dto.LoginUsuario;
 import com.registro.Register.repository.UsuarioRepository;
 import com.registro.Register.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,16 +48,15 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public UsuarioResponse editarUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest){
+    public ResponseEntity<?> editarUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest){
         UsuarioResponse editarUser = service.editarUsuario(usuarioRequest);
-        return ResponseEntity.ok(editarUser).getBody();
+        return ResponseEntity.ok(editarUser);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletarUsuario(@PathVariable Long id) {
-        repository.deleteById(id);
+        service.deletarUsuario(id);
         return ResponseEntity.noContent().build();
-
     }
 
     @PostMapping("/login")
@@ -83,17 +79,5 @@ public class UsuarioController {
 
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-
-        ex.getBindingResult().getAllErrors().forEach(error -> {
-            String fieldName = ((FieldError) error).getField(); // Corrigido o cast
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-
-        return ResponseEntity.badRequest().body(errors);
-    }
 
 }

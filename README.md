@@ -2,18 +2,12 @@
 ## Projeto pagina de cadastro e login com autenticação e criptografia de senhas.
 
  
-FRONT-END
-* Sera uma pagina em html, css e js puro, que ira fazer o envio das requisições json para a 
-api web java. 
-* Uma pagina de Registro
-* Uma Pagina de Login
-* Uma página apos a autenticação com jwt(Com um cronomento mostrando o tempo de autenticação)
+PROXIMOS PASSOS
+- Criar @ControllerAdvaicer para tratamento personalizado das exceçoes.
+- Criar uma pagina crud para deletar, buscar e editar os usuarios diretamento no html.
+- Melhorar o README.md mostrando o funcionamento e oque foi usado para fazer o projeto.
 
-BACK-END 
-* Umas simples api web aonde ira salvar os dados cadastrados no banco depois para fazer o login 
-sera necessario fazer uma consulta no banco para ver se esses dados estão la cadastrados.
-* Usar criptografica de senha e autenticação jwt
+DEVOPS
+- Colocar o BACK, FRONT e o BANCO na web e  dentro do DOCKER.
 
-Resolver
-Melhorar o js
 

@@ -1,12 +1,14 @@
 package com.registro.Register.service;
 
 import com.registro.Register.config.UsuarioMapper;
+import com.registro.Register.controller.exception.DomainException;
 import com.registro.Register.dto.UsuarioRequest;
 import com.registro.Register.dto.UsuarioResponse;
-import com.registro.Register.model.LoginUsuario;
+import com.registro.Register.dto.LoginUsuario;
 import com.registro.Register.model.Usuario;
 import com.registro.Register.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,10 +62,20 @@ public class UsuarioService {
         return mapper.toResponse(user);
     }
 
+    public Usuario deletarUsuario(Long id){
+        Usuario user = repository.findById(id)
+                .orElseThrow(() -> new DomainException("UF "+ id +" não encontrado", HttpStatus.NOT_FOUND));
+
+        repository.deleteById(id);
+
+        return user;
+    }
+
     public Boolean validarSenha(LoginUsuario loginRequest) {
 
         Usuario senha = repository.findByEmail(loginRequest.getEmail());
 
         return encoder.matches(loginRequest.getSenha(), senha.getSenha());
     }
+
 }

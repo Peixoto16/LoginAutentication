@@ -1,9 +1,13 @@
-package com.registro.Register.model;
+package com.registro.Register.dto;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class LoginUsuario {
 
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String senha;
 
     public String getEmail() {
